@@ -50,25 +50,22 @@ public class Game : MonoBehaviour
 		float hlena = Mathf.Abs(hlen);
 		float vlena = Mathf.Abs(vlen);
 
-		if (hlena < 5 && vlena < 5)
+		if (e.delta.magnitude < 5)
 			return;
+
+		float hd = Vector2.Dot(e.delta.normalized, new Vector2(.5f, .5f).normalized);
+		float vd = Vector2.Dot(e.delta.normalized, new Vector2(-.5f, .5f).normalized);
 
 		wasDrag = true;
 
-		if (hlena > vlena)
-		{
-			if (hlen < 0)
-				player.TurnTo(Base.Direction.left);
-			else
-				player.TurnTo(Base.Direction.right);
-		}
-		else if (hlena < vlena)
-		{
-			if (vlen < 0)
-				player.TurnTo(Base.Direction.back);
-			else
-				player.TurnTo(Base.Direction.front);
-		}
+		if (hd < -.5f)
+			player.TurnTo(Base.Direction.left);
+		else if (hd > .5f)
+			player.TurnTo(Base.Direction.right);
+		else if (vd > .5f)
+			player.TurnTo(Base.Direction.front);
+		else if (vd < -.5f)
+			player.TurnTo(Base.Direction.back);
 	}
 
 	public void OnTap()
