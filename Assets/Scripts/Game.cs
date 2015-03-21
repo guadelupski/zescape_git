@@ -18,8 +18,9 @@ public class Game : Base
 	void Start ()
 	{
 		StartCoroutine(Spawn());
+		pathfinding.Prepare();
 	}
-
+	
 	IEnumerator Spawn()
 	{
 		yield return new WaitForSeconds(scene.level.delayBeforeSpawns.Random());

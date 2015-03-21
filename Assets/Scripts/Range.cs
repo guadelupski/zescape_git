@@ -11,4 +11,10 @@ public struct Range
 	{
 		return UnityEngine.Random.Range(min, max);
 	}
+
+	public bool IsIn(float v)
+	{
+		return v > min && v < max;
+	}
+
 }

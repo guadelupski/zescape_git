@@ -44,6 +44,11 @@ public class Scene : Base
 			});
 		}
 
+		ForEachCell(c =>
+			{
+				c.waypoint = c.gameObject.AddComponent<Waypoint>();
+				c.waypoint.cell = c;
+			});
 
 	}
 
@@ -97,6 +102,19 @@ public class Scene : Base
 		ForEachCell(c =>
 			{
 				cellsArray[c.i, c.j] = c;
+			});
+		ForEachCell(c =>
+			{
+				c.left = GetCellAtIndex(c.i - 1, c.j);
+				c.right = GetCellAtIndex(c.i + 1, c.j);
+				c.front = GetCellAtIndex(c.i, c.j + 1);
+				c.front = GetCellAtIndex(c.i, c.j - 1);
+
+				if (c.left) c.near.Add(c.left);
+				if (c.right) c.near.Add(c.right);
+				if (c.front) c.near.Add(c.front);
+				if (c.back) c.near.Add(c.back);
+
 			});
 	}
 

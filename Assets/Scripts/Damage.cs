@@ -74,7 +74,8 @@ public class Damage : Base
 			
 			isDead = true;
 
-			StartCoroutine(WaitAndDestroy());
+			if(!isPlayer)
+				StartCoroutine(WaitAndDestroy());
 		}
 	}
 

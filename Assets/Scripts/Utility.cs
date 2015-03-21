@@ -23,4 +23,51 @@ public static class Utility
 		return (src.transform.position - target.transform.position).magnitude;
 	}
 
+	public static float DistanceTo(this MonoBehaviour src, Transform target)
+	{
+		return (src.transform.position - target.position).magnitude;
+	}
+
+	public static float DistanceTo(this Transform src, MonoBehaviour target)
+	{
+		return (src.position - target.transform.position).magnitude;
+	}
+	
+	public static Vector3 VectorTo(this MonoBehaviour src, MonoBehaviour target)
+	{
+		return target.transform.position - src.transform.position;
+	}
+
+	public static Vector3 VectorTo(this MonoBehaviour src, Transform target)
+	{
+		return target.position - src.transform.position;
+	}
+	
+	public static Vector3 VectorTo(this Transform src, MonoBehaviour target)
+	{
+		return target.transform.position - src.position;
+	}
+
+	public static bool LinearLerp(this Vector3 from, Vector3 to, float speed = 1)
+	{
+		var dir = to - from;
+		var len = dir.magnitude;
+
+		if (len < .001f)
+		{
+			from = to;
+			return true;
+		}
+		var result = from + dir.normalized * speed;
+
+		if ((from - result).magnitude >= dir.magnitude)
+		{
+			from = to;
+			return true;
+		}
+		
+		from = result;
+		return false;
+	}
+
 }
