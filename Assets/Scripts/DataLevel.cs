@@ -8,9 +8,15 @@ public class DataLevel : ScriptableObject
 	public class SceneItem
 	{
 		public DataItem item;
-		public float possibility;
+		public int possibility;
 	}
 
+	public Range delayBeforeSpawns;
+	public Range delayBetwenSpawns;
+
+	public float solidComplexity = .1f;
+
 	public List<SceneItem> items;
+	public List<SceneItem> spawns;
 
 }

@@ -40,10 +40,20 @@ public static class ScriptableObjectUtility
 	{
 		ScriptableObjectUtility.CreateAsset<DataItem>();
 	}
+	[MenuItem("Assets/Create/DataSpawn")]
+	public static void CreateDataSpawn()
+	{
+		ScriptableObjectUtility.CreateAsset<DataSpawn>();
+	}
 	[MenuItem("Assets/Create/DataLevel")]
 	public static void CreateDataLevel()
 	{
 		ScriptableObjectUtility.CreateAsset<DataLevel>();
+	}
+	[MenuItem("Assets/Create/DataOptions")]
+	public static void CreateDataOptions()
+	{
+		ScriptableObjectUtility.CreateAsset<DataOptions>();
 	}
 #endif
 }

@@ -22,16 +22,23 @@ public class Scene : Base
 	{
 		Init();
 
+		List<DataItem> items = new List<DataItem>();
 		foreach (var si in level.items)
+		{
+			for (int i = -1; i < si.possibility; i++)
+				items.Add(si.item);
+		}
+
+		foreach (var si in items)
 		{
 			ForEachCell(c =>
 			{
 				if(!c.HaveItem)
-				if (Random.value < si.possibility)
+				if (Random.value < level.solidComplexity)
 				{
 					c.IsWalkable = false;
 					c.HaveItem = true;
-					var go = Instantiate(si.item.prefab, c.transform.position, si.item.GetRotation()) as GameObject;
+					var go = Instantiate(si.prefab, c.transform.position, si.GetRotation()) as GameObject;
 					go.transform.parent = itemsRoot;
 				}
 			});

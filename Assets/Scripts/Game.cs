@@ -2,17 +2,53 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
+using System.Collections.Generic;
 
-public class Game : MonoBehaviour
+public class Game : Base
 {
 
+	public DataOptions options;
 	public Unit player;
+
+	void Awake()
+	{
+		game = this;
+	}
 
 	void Start ()
 	{
-	
+		StartCoroutine(Spawn());
 	}
-	
+
+	IEnumerator Spawn()
+	{
+		yield return new WaitForSeconds(scene.level.delayBeforeSpawns.Random());
+
+		List<DataItem> spawns = new List<DataItem>();
+
+		foreach (var s in scene.level.spawns)
+		{
+			for (int i = -1; i < s.possibility; i++)
+				spawns.Add(s.item);
+		}
+
+		while (true)
+		{
+			Vector3 pos = player.cell.transform.position;
+			pos.x += Random.Range(-2, 2);
+			pos.z += Random.Range(-2, 2); 
+
+			var spawnItem = spawns[Random.Range(0, spawns.Count)];
+
+			var go = Instantiate(spawnItem.prefab, pos, spawnItem.GetRotation()) as GameObject;
+			go.SetActive(true);
+
+			yield return new WaitForSeconds(scene.level.delayBetwenSpawns.Random());
+		}
+	}
+
+
+
 	void Update ()
 	{
 		float vaxis = Input.GetAxis("Vertical");
@@ -41,14 +77,6 @@ public class Game : MonoBehaviour
 	{
 
 		var e = be as PointerEventData;
-
-		Vector2 delta = e.delta;
-
-		float hlen = e.delta.x;
-		float vlen = e.delta.y;
-
-		float hlena = Mathf.Abs(hlen);
-		float vlena = Mathf.Abs(vlen);
 
 		if (e.delta.magnitude < 5)
 			return;

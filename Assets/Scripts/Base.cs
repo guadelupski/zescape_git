@@ -3,8 +3,9 @@ using System.Collections;
 
 public class Base : MonoBehaviour
 {
-
+	public static Game game;
 	public static Scene scene;
+	public static GameUI ui;
 
 	public enum Direction
 	{

@@ -12,7 +12,8 @@ public class Unit : Base
 
 	Quaternion destRotation = Quaternion.identity;
 
-	Cell cell;
+	[System.NonSerialized]
+	public Cell cell;
 
 	void Start ()
 	{
@@ -47,10 +48,11 @@ public class Unit : Base
 
 		while (true)
 		{
-			var vdir = (nc.transform.position - transform.position).normalized * Time.deltaTime *4;
+			var vFullDir = nc.transform.position - transform.position;
+			var vdir = vFullDir.normalized * Time.deltaTime * 4;
 			var nextPos = transform.position + vdir;
 
-			if (Vector3.Dot(nc.transform.position - transform.position, nc.transform.position - nextPos) < 0)
+			if (vFullDir.magnitude < .01f || Vector3.Dot(nc.transform.position - transform.position, nc.transform.position - nextPos) <= 0)
 			{
 				cell = nc;
 				if (movingQueued)

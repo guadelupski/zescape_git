@@ -8,6 +8,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 416414}
+  - 114: {fileID: 11435728}
+  - 114: {fileID: 11401528}
   m_Layer: 0
   m_Name: Rock2
   m_TagString: Untagged
@@ -88,6 +90,32 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 187954}
   m_Mesh: {fileID: 4300000, guid: 2e63748b1771f4d9f85197f8244d4bbd, type: 3}
+--- !u!114 &11401528
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2b587538a2f9f0499e4413c1c814f71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11435728
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8943cab4fc278c64e975a612cef245e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartHP: 3
+  isPlayer: 0
+  displayLedLife: 1
+  delayAfterDeath: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

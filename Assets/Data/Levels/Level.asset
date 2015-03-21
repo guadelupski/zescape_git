@@ -11,10 +11,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eb97c382793be240a3c6f3fee0502ae, type: 3}
   m_Name: Level
   m_EditorClassIdentifier: 
+  delayBeforeSpawns:
+    min: 2
+    max: 2
+  delayBetwenSpawns:
+    min: 5
+    max: 5
+  solidComplexity: .0199999996
   items:
   - item: {fileID: 11400000, guid: 7a06284a52cf4ad44b1df853bfad4c96, type: 2}
-    possibility: .100000001
+    possibility: 0
   - item: {fileID: 11400000, guid: 4d3894b480643d049aa5919071374b54, type: 2}
-    possibility: .100000001
+    possibility: 0
   - item: {fileID: 11400000, guid: 2424623037dbf97479a42212fc0ca33b, type: 2}
-    possibility: .100000001
+    possibility: 0
+  spawns:
+  - item: {fileID: 11400000, guid: 5087e1d25a18e1e4e98c09600e81bfb8, type: 2}
+    possibility: 0
+  - item: {fileID: 11400000, guid: 0683dba1fbd20f04b9b4d4e679d1863f, type: 2}
+    possibility: 0
