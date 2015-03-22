@@ -28,6 +28,6 @@ public class UIFolow3D : Base
 
 		var pos2d = RectTransformUtility.WorldToScreenPoint(Camera.main, pos);
 
-		rect.anchoredPosition = pos2d-ui.rect.sizeDelta / 2f;
+		rect.anchoredPosition = pos2d - new Vector2(Screen.width, Screen.height) / 2;
 	}
 }

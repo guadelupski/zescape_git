@@ -39,7 +39,7 @@ public struct SmoothValue
 
 	public int AsInt()
 	{
-		return (int)v;
+		return (int)(v + .5f);
 	}
 
 	public float AsRange01()

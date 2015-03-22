@@ -12,6 +12,8 @@ public class Damage : Base
 	public bool displayLedLife = true;
 	public float delayAfterDeath = 5;
 
+	public int scoreOnDie;
+
 	LedLife ledLife;
 
 	[System.NonSerialized]
@@ -26,7 +28,7 @@ public class Damage : Base
 
 	void Awake()
 	{
-		damages.Add(this);
+		
 	}
 
 	public static List<Damage> GetAliveList()
@@ -37,6 +39,8 @@ public class Damage : Base
 
 	void Start ()
 	{
+		damages.Add(this);
+
 		HP = StartHP;
 		if (isPlayer)
 			ui.SetPlayerHPValues(HP, HP);
@@ -74,9 +78,28 @@ public class Damage : Base
 			
 			isDead = true;
 
-			if(!isPlayer)
+			if (!isPlayer)
+			{
+				game.score += scoreOnDie;
 				StartCoroutine(WaitAndDestroy());
+			}
 		}
+	}
+
+	public void Heal(float v)
+	{
+		HP += v;
+		HP = Mathf.Min(StartHP, HP);
+		if (isPlayer)
+			ui.ChangePlayerHP(HP);
+	}
+
+	public void ChangeHP(float nv)
+	{
+		if (nv < 0)
+			Hit(-nv);
+		else if (nv > 0)
+			Heal(nv);
 	}
 
 	IEnumerator WaitAndDestroy()
