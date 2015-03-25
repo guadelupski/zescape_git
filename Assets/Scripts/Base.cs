@@ -6,6 +6,7 @@ public class Base : MonoBehaviour
 	public static Game game;
 	public static Scene scene;
 	public static GameUI ui;
+	public static Pathfinding pathfinding;
 
 	public enum Direction
 	{

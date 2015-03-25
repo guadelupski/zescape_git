@@ -10,8 +10,6 @@ public class Game : Base
 	public DataOptions options;
 	public Unit player;
 
-	public int score;
-
 	void Awake()
 	{
 		game = this;
@@ -20,6 +18,7 @@ public class Game : Base
 	void Start ()
 	{
 		StartCoroutine(Spawn());
+		pathfinding.Prepare();
 	}
 	
 	IEnumerator Spawn()
@@ -57,13 +56,13 @@ public class Game : Base
 		float haxis = Input.GetAxis("Horizontal");
 
 		if (vaxis > 0)
-			{ player.TurnTo(Base.Direction.front); player.Move(); }
+			player.TurnTo(Base.Direction.front);
 		if (vaxis < 0)
-			{ player.TurnTo(Base.Direction.back); player.Move(); }
+			player.TurnTo(Base.Direction.back);
 		if (haxis > 0)
-			{ player.TurnTo(Base.Direction.right); player.Move(); }
+			player.TurnTo(Base.Direction.right);
 		if (haxis < 0)
-			{ player.TurnTo(Base.Direction.left); player.Move(); }
+			player.TurnTo(Base.Direction.left);
 
 		if (Input.GetButtonDown("Jump"))
 			player.Move();

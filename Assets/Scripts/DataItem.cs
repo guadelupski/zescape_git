@@ -15,8 +15,6 @@ public class DataItem : ScriptableObject
 	public GameObject prefab;
 	public RotationType rotationType;
 
-	public int score;
-
 	public Quaternion GetRotation()
 	{
 		switch (rotationType)

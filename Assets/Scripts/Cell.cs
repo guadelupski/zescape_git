@@ -10,6 +10,8 @@ public class Cell : Base
 	public int i;
 	public int j;
 
+	public Waypoint waypoint;
+
 	[System.NonSerialized]
 	public Cell left;
 	[System.NonSerialized]
@@ -21,14 +23,6 @@ public class Cell : Base
 
 	[System.NonSerialized]
 	public List<Cell> near=new List<Cell>();
-
-	[System.NonSerialized]
-	public bool optimalForAttack = false;
-
-	public Bounds bounds;
-
-	[System.NonSerialized]
-	public Unit unit;
 
 	public Cell GetNear(Direction dir)
 	{
@@ -77,11 +71,6 @@ public class Cell : Base
 
 		return result;
 
-	}
-
-	public bool Walkable()
-	{
-		return unit == null && IsWalkable;
 	}
 
 }

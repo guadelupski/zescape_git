@@ -15,16 +15,11 @@ public class Scene : Base
 
 	public List<Cell> cells;
 	public Cell[,] cellsArray;
-	
-	[System.NonSerialized]
-	public List<Cell> optimalForAttackCells = new List<Cell>();
 
 	public bool drawDebug = false;
 
 	public void Generate()
 	{
-		Random.seed = 0;
-
 		Init();
 
 		List<DataItem> items = new List<DataItem>();
@@ -48,6 +43,12 @@ public class Scene : Base
 				}
 			});
 		}
+
+		ForEachCell(c =>
+			{
+				c.waypoint = c.gameObject.AddComponent<Waypoint>();
+				c.waypoint.cell = c;
+			});
 
 	}
 
@@ -79,8 +80,6 @@ public class Scene : Base
 				cell.i = i;
 				cell.j = j;
 
-				cell.bounds = new Bounds(co.transform.position, Vector3.one);
-
 			}
 		}
 
@@ -109,7 +108,7 @@ public class Scene : Base
 				c.left = GetCellAtIndex(c.i - 1, c.j);
 				c.right = GetCellAtIndex(c.i + 1, c.j);
 				c.front = GetCellAtIndex(c.i, c.j + 1);
-				c.back = GetCellAtIndex(c.i, c.j - 1);
+				c.front = GetCellAtIndex(c.i, c.j - 1);
 
 				if (c.left) c.near.Add(c.left);
 				if (c.right) c.near.Add(c.right);
@@ -151,28 +150,9 @@ public class Scene : Base
 		return result;
 	}
 
-	public bool Linecast(List<Cell> list, Cell from, Cell to)
+	void Update()
 	{
-		var dir = to.transform.position-from.transform.position;
-		Ray ray=new Ray(from.transform.position,to.transform.position-from.transform.position);
-		float len=dir.magnitude;
 
-		foreach (var c in list)
-		{
-			if (c == from)
-				continue;
-			
-			float dist;
-			if (!c.IsWalkable && c.bounds.IntersectRay(ray, out dist))
-			{
-				var point = ray.GetPoint(dist);
-				dist = (point - from.transform.position).magnitude;
-				if (dist < len)
-					return true;
-			}
-
-		}
-		return false;
 	}
 
 	void OnDrawGizmos()
@@ -183,42 +163,12 @@ public class Scene : Base
 
 		foreach (var c in cells)
 		{
-			if (c.optimalForAttack)
-			{
-				Gizmos.color = Color.blue;
-				Gizmos.DrawCube(c.transform.position, Vector3.one*.5f);
-			}
 			
-			Gizmos.color = Color.white;
-
 			if(c.IsWalkable)
 				Gizmos.DrawWireCube(c.transform.position, Vector3.one);
 			else
 				Gizmos.DrawCube(c.transform.position, Vector3.one);
 
-		}
-
-		foreach (var c in optimalForAttackCells)
-		{
-			Gizmos.color = Color.yellow;
-			Gizmos.DrawCube(c.transform.position, Vector3.one * .2f);			
-		}
-
-	}
-
-	void OnGUI_()
-	{
-		Rect r = new Rect(0, 0, 200, 30);
-
-		foreach (var c in cells)
-		{
-
-			var pos = Camera.main.WorldToScreenPoint(c.transform.position);
-			r.x = pos.x;
-			r.y = Screen.height - pos.y;
-
-			if (c.unit != null)
-				GUI.Label(r, c.unit.name);
 		}
 	}
 

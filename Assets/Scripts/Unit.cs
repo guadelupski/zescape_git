@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 
 public class Unit : Base
 {
@@ -16,41 +14,13 @@ public class Unit : Base
 
 	[System.NonSerialized]
 	public Cell cell;
-	
-	[System.NonSerialized]
-	public Cell prevCell;
-
-	[System.NonSerialized]
-	public Damage damage;
 
 	void Start ()
 	{
-		damage = GetComponent<Damage>();
 		transform.rotation = RotationFromDir(dir);
 		destRotation = transform.rotation;
 		cell = scene.GetCellAtPosition(transform.position);
-		prevCell = cell;
-		cell.unit = this;
-
 		transform.position = cell.transform.position;
-
-		if (isPlayer)
-			StartCoroutine(Collect());
-
-	}
-
-	IEnumerator Collect()
-	{
-		while (true)
-		{
-			yield return new WaitForSeconds(.2f);
-
-			var nearest = Collectable.GetNear(this, .5f);
-			if (nearest)
-			{
-				nearest.Collect();
-			}
-		}
 	}
 
 	public void Move()
@@ -85,10 +55,6 @@ public class Unit : Base
 			if (vFullDir.magnitude < .01f || Vector3.Dot(nc.transform.position - transform.position, nc.transform.position - nextPos) <= 0)
 			{
 				cell = nc;
-
-				if (isPlayer)
-					OnPlayerComeToCell();
-
 				if (movingQueued)
 				{
 					movingQueued = false;
@@ -113,45 +79,6 @@ public class Unit : Base
 		moving = false;
 	}
 
-	void OnPlayerComeToCell()
-	{
-		const float minDist = 2;
-		const float maxDist = 3;
-
-		scene.optimalForAttackCells.Clear();
-		List<Cell> near = new List<Cell>();
-
-		foreach (var c in scene.cells)
-		{
-			if (c == cell)
-				continue;
-
-			float dist = c.DistanceTo(cell);
-
-			if (dist < maxDist)
-			{
-				near.Add(c);
-				if (dist < minDist)
-					c.optimalForAttack = false;
-				else
-					c.optimalForAttack = true;
-			}
-			else
-			{
-				c.optimalForAttack = false;
-			}
-		}
-
-		foreach (var c in near)
-		{
-			if (c.optimalForAttack && scene.Linecast(near, cell, c))
-				c.optimalForAttack = false;
-			else
-				if(c.optimalForAttack)
-					scene.optimalForAttackCells.Add(c);
-		}
-
-	}
 
 	bool BeginMove(out Cell nc)
 	{
@@ -168,15 +95,9 @@ public class Unit : Base
 		destRotation = RotationFromDir(dir);
 	}
 
-	
+	// Update is called once per frame
 	void Update ()
 	{
 		transform.rotation = Quaternion.Lerp(transform.rotation, destRotation, Time.deltaTime * 16);
-		if (prevCell != cell)
-		{
-			prevCell.unit = null;
-			cell.unit = this;
-			prevCell = cell;
-		}
 	}
 }

@@ -19,9 +19,9 @@ MonoBehaviour:
     max: 5
   solidComplexity: .0199999996
   items:
-  - item: {fileID: 11400000, guid: 40c578d21186b84418f00265bb375866, type: 2}
+  - item: {fileID: 11400000, guid: 7a06284a52cf4ad44b1df853bfad4c96, type: 2}
     possibility: 0
-  - item: {fileID: 11400000, guid: 41aa20b230a62654f83f9bd6fc9328d6, type: 2}
+  - item: {fileID: 11400000, guid: 4d3894b480643d049aa5919071374b54, type: 2}
     possibility: 0
   spawns:
   - item: {fileID: 11400000, guid: 5087e1d25a18e1e4e98c09600e81bfb8, type: 2}
